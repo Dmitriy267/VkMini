@@ -11,7 +11,14 @@ export const newsApi = createApi({
         getNewsStories: builder.query<NewsStory, string>({
             query: (topstories) => `${topstories}`,
         }),
+        getNewsStory: builder.mutation({
+            query: (newsId) => ({
+                url: `/item/${newsId}`,
+                method: 'POST',
+                body: newsId,
+            }),
+        }),
     }),
 });
 
-export const { useGetNewsStoriesQuery } = newsApi;
+export const { useGetNewsStoriesQuery, useGetNewsStoryMutation } = newsApi;
