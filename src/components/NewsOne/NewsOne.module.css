@@ -1,0 +1,10 @@
+.wrapper__div {
+    margin: 20px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    width: 720px;
+    height: auto;
+    padding: 10px;
+    cursor: pointer;
+}
