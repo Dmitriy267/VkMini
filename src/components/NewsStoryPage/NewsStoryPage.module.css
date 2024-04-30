@@ -1,0 +1,10 @@
+.wrapper__div {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: auto;
+    justify-content: space-between;
+    border: 2px solid blue;
+    padding: 15px;
+}

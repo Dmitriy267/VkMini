@@ -7,14 +7,15 @@ import { DateTime } from '../DateTime/DateTime';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import { useAppDispatch } from '../../redux/hooks/hooks';
 import { ShowNewsId } from '../../redux/features/newsOne/newsOneSlice';
+
+const initialState = {
+    title: '',
+    score: 0,
+    by: '',
+    time: 0,
+    id: 0,
+};
 export const NewsOne: FC<NewsOneProps> = ({ newsId }) => {
-    const initialState = {
-        title: '',
-        score: 0,
-        by: '',
-        time: new Date(),
-        id: 0,
-    };
     const [newsOne, setNewsOne] = useState(initialState);
     const routeNavigator = useRouteNavigator();
     const dispatch = useAppDispatch();
@@ -26,7 +27,7 @@ export const NewsOne: FC<NewsOneProps> = ({ newsId }) => {
         });
     }, []);
     const { title, score, by, time, id } = newsOne;
-    const month = new Date(time).getMonth();
+    const month = new Date(time * 1000).getMonth();
     const monthNames: string[] = [
         'January',
         'February',
@@ -42,11 +43,11 @@ export const NewsOne: FC<NewsOneProps> = ({ newsId }) => {
         'December ',
     ];
     const myTime =
-        `${new Date(time).getDate()}` +
-        ' ' +
+        `${new Date(time * 1000).getDate()}` +
+        '. ' +
         `${monthNames[month]}` +
-        ' ' +
-        `${new Date(time).getFullYear()}`;
+        '. ' +
+        `${new Date(time * 1000).getFullYear()}`;
     return (
         newsOne && (
             <div

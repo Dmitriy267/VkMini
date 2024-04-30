@@ -4,6 +4,7 @@ import { useActiveVkuiLocation } from '@vkontakte/vk-mini-apps-router';
 import { Root, View, Panel } from '@vkontakte/vkui';
 import { NewsStoryPage } from './components/NewsStoryPage/NewsStoryPage';
 import { DEFAULT_VIEW, DEFAULT_VIEW_PANELS } from './routes';
+import styles from './App.module.css';
 export const App: FC = () => {
     const {
         view: activeView = DEFAULT_VIEW,
@@ -12,7 +13,7 @@ export const App: FC = () => {
     // const activePanel = useGetPanelForView('default_view');
 
     return (
-        <>
+        <div className={styles.App}>
             <Root activeView={activeView}>
                 <View activePanel={activePanel} nav="default_view">
                     <Panel nav="home_panel">
@@ -31,6 +32,6 @@ export const App: FC = () => {
                     </Panel>
                 </View>
             </Root>
-        </>
+        </div>
     );
 };

@@ -14,7 +14,7 @@ export const getShowStory = async (storyId: string) => {
     }
 };
 
-export const getShowStoriesComment = async (commentId: string) => {
+export const getComment = async (commentId: string) => {
     try {
         const res = await axios
             .get(`${itemUrl + commentId}.json`)
