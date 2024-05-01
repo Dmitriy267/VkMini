@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { News } from '../../types/News/News';
-
 export type NewsStory = News[];
 export const newsApi = createApi({
     reducerPath: 'newsApi',
@@ -11,14 +10,14 @@ export const newsApi = createApi({
         getNewsStories: builder.query<NewsStory, string>({
             query: (topstories) => `${topstories}`,
         }),
-        getNewsStory: builder.mutation({
-            query: (newsId) => ({
-                url: `/item/${newsId}`,
-                method: 'POST',
-                body: newsId,
+        updateNews: builder.mutation({
+            query: (id, ...rest) => ({
+                url: `/item/${id}`,
+                method: 'PUT',
+                body: rest,
             }),
         }),
     }),
 });
 
-export const { useGetNewsStoriesQuery, useGetNewsStoryMutation } = newsApi;
+export const { useGetNewsStoriesQuery, useUpdateNewsMutation } = newsApi;

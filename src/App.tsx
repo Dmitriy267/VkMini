@@ -10,7 +10,6 @@ export const App: FC = () => {
         view: activeView = DEFAULT_VIEW,
         panel: activePanel = DEFAULT_VIEW_PANELS,
     } = useActiveVkuiLocation();
-    // const activePanel = useGetPanelForView('default_view');
 
     return (
         <div className={styles.App}>

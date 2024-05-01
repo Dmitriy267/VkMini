@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { useGetNewsStoriesQuery } from '../../redux/services/news';
 import { NewsOne } from '../NewsOne/NewsOne';
 import { News } from '../../types/News/News';
+
 export const NewsPage: FC<News> = () => {
     const { data, error, isLoading } =
         useGetNewsStoriesQuery('/topstories.json');
-    console.log(data?.slice(400, 500));
 
     return (
         <>

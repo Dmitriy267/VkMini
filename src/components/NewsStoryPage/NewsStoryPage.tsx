@@ -5,8 +5,9 @@ import { useAppSelector } from '../../redux/hooks/hooks';
 import { getShowStory } from '../../api/api';
 import { Title, Text, Footnote } from '@vkontakte/vkui';
 import styles from './NewsStoryPage.module.css';
-import { DateTime } from '../DateTime/DateTime';
+import { DateTime, DateTimeFunc } from '../DateTime/DateTime';
 import { Comments } from '../Comments/Comments';
+
 const initialState = {
     title: '',
     url: '',
@@ -14,29 +15,14 @@ const initialState = {
     by: '',
     descendants: 0,
     kids: [],
+    id: 0,
 };
 export const NewsStoryPage: FC = () => {
     const routeNavigator = useRouteNavigator();
     const ItemId = useAppSelector((state) => state.newsOne.listId);
-    console.log(`ItemId`, ItemId);
 
     const [data, setData] = useState(initialState);
 
-    //     const fetchData = () => {
-    //         fetch(
-    //             ` https://hacker-news.firebaseio.com/v0/item/` +
-    //                 `${JSON.stringify(ItemId)}` +
-    //                 `.json`
-    //         )
-    //             .then((response) => response.json())
-    //             .then((news) => setData(news));
-    //     };
-
-    //     useEffect(() => {
-    //         fetchData();
-    //     }, []);
-    //     console.log(data, data);
-    // const {} =data
     const str = ItemId.toString();
     useEffect(() => {
         getShowStory(str).then((data) => {
@@ -45,29 +31,16 @@ export const NewsStoryPage: FC = () => {
             }
         });
     }, []);
-    console.log(`data`, data);
+
     const { url, title, by, descendants, time, kids } = data;
-    const month = new Date(time * 1000).getMonth();
-    const monthNames: string[] = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May ',
-        'June ',
-        'July ',
-        'August ',
-        'September ',
-        'October ',
-        'November ',
-        'December ',
-    ];
-    const myTime =
-        `${new Date(time * 1000).getDate()}` +
-        '. ' +
-        `${monthNames[month]}` +
-        '. ' +
-        `${new Date(time * 1000).getFullYear()}`;
+
+    const handeClick = () => {
+        if (kids) {
+            if (kids.length === 0) {
+                return null;
+            }
+        }
+    };
     return (
         data && (
             <div className={styles.wrapper__div}>
@@ -86,9 +59,12 @@ export const NewsStoryPage: FC = () => {
                 <Footnote weight="1">Комментариев: {descendants}</Footnote>
                 <DateTime>
                     <span>
-                        Дата публикации:{''} {`${myTime}`}
+                        Дата публикации:{''} {DateTimeFunc(time)}
                     </span>
                 </DateTime>
+                <Div>
+                    <Button onClick={handeClick}>Обновить комментарии</Button>
+                </Div>
                 <Div>{kids && <Comments comments={kids} />}</Div>
                 <Button onClick={() => routeNavigator.push('/')}>
                     Назад к списку новостей
