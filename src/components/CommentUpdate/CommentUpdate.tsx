@@ -1,23 +1,24 @@
 import { Div, Text } from '@vkontakte/vkui';
 import { FC, useEffect, useState } from 'react';
 import { getComment } from '../../api/api';
-import { CommentProps } from '../../types/CommentProps/CommentProps';
-import { Comments } from '../Comments/Comments';
+import { useAppSelector } from '../../redux/hooks/hooks';
 
-import styles from './Comment.module.css';
+import { Comments } from '../Comments/Comments';
+import styles from './CommentUpdate.module.css';
+
 const initialCommitState = {
     text: '',
     kids: [],
     id: 0,
 };
-export const Comment: FC<CommentProps> = ({ commentId }) => {
+export const CommentUpdate: FC = () => {
     const [comment, setComment] = useState(initialCommitState);
     const [list, setList] = useState(false);
 
-    const str = commentId.toString();
     const label = 'Показать скрытый комментарий';
+    const newCommit = useAppSelector((state) => state.comment.kids);
     useEffect(() => {
-        getComment(str).then((data) => {
+        getComment(Random(newCommit)).then((data) => {
             if (data) {
                 setComment(data);
             }
@@ -55,3 +56,10 @@ export const Comment: FC<CommentProps> = ({ commentId }) => {
         </>
     );
 };
+
+function Random(arr: number[]): string {
+    const random = Math.floor(Math.random() * arr.length);
+    let num = arr[random];
+
+    return num.toString();
+}

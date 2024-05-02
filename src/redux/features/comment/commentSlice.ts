@@ -1,29 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-type Comments = {
-    idKid: number;
+type commentState = {
+    kids: number[];
 };
-type commentsState = {
-    comment: Comments[];
-};
-const initialState: commentsState = {
-    comment: [],
+const initialState: commentState = {
+    kids: [],
 };
 export const commentSlice = createSlice({
-    name: 'comment',
+    name: 'kids',
     initialState,
     reducers: {
-        getComment: (state, action: PayloadAction<number>) => {
-            state.comment.push({
-                idKid: action.payload,
-            });
-        },
-        updateComment: (state, action: PayloadAction<number>) => {
-            state.comment.find((item) => item.idKid === action.payload);
+        getIdComment: (state, action: PayloadAction<number[]>) => {
+            state.kids = action.payload;
         },
     },
 });
 
-export const { getComment, updateComment } = commentSlice.actions;
+export const { getIdComment } = commentSlice.actions;
 export default commentSlice.reducer;

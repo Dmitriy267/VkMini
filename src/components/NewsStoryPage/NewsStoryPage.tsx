@@ -1,12 +1,14 @@
 import { FC, useState, useEffect } from 'react';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import { Button, Div, Link } from '@vkontakte/vkui';
-import { useAppSelector } from '../../redux/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { getShowStory } from '../../api/api';
 import { Title, Text, Footnote } from '@vkontakte/vkui';
 import styles from './NewsStoryPage.module.css';
 import { DateTime, DateTimeFunc } from '../DateTime/DateTime';
 import { Comments } from '../Comments/Comments';
+import { getIdComment } from '../../redux/features/comment/commentSlice';
+import { NewCommentsUpdate } from '../NewCommentsUpdate/NewCommentsUpdate';
 
 const initialState = {
     title: '',
@@ -23,6 +25,7 @@ export const NewsStoryPage: FC = () => {
 
     const [data, setData] = useState(initialState);
     const [textShow, setTextShow] = useState(false);
+
     const str = ItemId.toString();
     useEffect(() => {
         getShowStory(str).then((data) => {
@@ -33,17 +36,20 @@ export const NewsStoryPage: FC = () => {
     }, []);
 
     const { url, title, by, descendants, time, kids } = data;
-    console.log(`data`, data);
+
+    const dispatch = useAppDispatch();
+    const [newValueComments, setNewValueComments] = useState(false);
     let textShowComment = 'Нет новых комментариев';
     const handeClick = () => {
-        console.log('click');
-        console.log('descendants', descendants);
-
         if (descendants === 0 || descendants === 1) {
             setTextShow(!textShow);
             return textShowComment;
+        } else {
+            dispatch(getIdComment(kids));
+            setNewValueComments(!newValueComments);
         }
     };
+
     return (
         data && (
             <div className={styles.wrapper__div}>
@@ -72,8 +78,16 @@ export const NewsStoryPage: FC = () => {
                             {textShowComment}
                         </p>
                     )}
+                    {newValueComments ? (
+                        <>
+                            <Div>
+                                <NewCommentsUpdate comments={kids} />
+                            </Div>
+                        </>
+                    ) : (
+                        <Div>{kids && <Comments comments={kids} />}</Div>
+                    )}
                 </Div>
-                <Div>{kids && <Comments comments={kids} />}</Div>
                 <Button onClick={() => routeNavigator.push('/')}>
                     Назад к списку новостей
                 </Button>
