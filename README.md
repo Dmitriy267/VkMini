@@ -1,3 +1,10 @@
+app id: 51913588
+Ссылка: https://stage-app51913588-891fd530a21b.pages.vk-apps.com/index.html
+Запуск:yarn start
+
+
+
+
 # Basic [VK Bridge](https://github.com/VKCOM/vk-bridge) + [VKUI](https://github.com/VKCOM/VKUI) + [VK Miniapps Router](https://github.com/VKCOM/vk-mini-apps-router) app
 
 Этот шаблон предоставляет базовый код и настройки для создания мини-приложения внутри ВКонтакте.  
