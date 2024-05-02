@@ -6,9 +6,9 @@ export const Comments: FC<CommentsProps> = ({ comments }) => {
     return (
         <>
             {' '}
-            {comments.slice(0, 1).map((item: any) => (
+            {comments.map((item: any) => (
                 <div key={item.id}>
-                    <Comment commentId={item} />
+                    <Comment commentId={item} {...item} />
                 </div>
             ))}
         </>

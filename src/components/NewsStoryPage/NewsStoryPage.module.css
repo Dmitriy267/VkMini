@@ -8,3 +8,8 @@
     border: 2px solid blue;
     padding: 15px;
 }
+
+.commentsText__p_dropdown {
+    margin-top: 15px;
+    font-weight: 600;
+}

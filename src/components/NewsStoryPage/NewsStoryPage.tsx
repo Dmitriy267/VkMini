@@ -22,7 +22,7 @@ export const NewsStoryPage: FC = () => {
     const ItemId = useAppSelector((state) => state.newsOne.listId);
 
     const [data, setData] = useState(initialState);
-
+    const [textShow, setTextShow] = useState(false);
     const str = ItemId.toString();
     useEffect(() => {
         getShowStory(str).then((data) => {
@@ -33,12 +33,15 @@ export const NewsStoryPage: FC = () => {
     }, []);
 
     const { url, title, by, descendants, time, kids } = data;
-
+    console.log(`data`, data);
+    let textShowComment = 'Нет новых комментариев';
     const handeClick = () => {
-        if (kids) {
-            if (kids.length === 0) {
-                return null;
-            }
+        console.log('click');
+        console.log('descendants', descendants);
+
+        if (descendants === 0 || descendants === 1) {
+            setTextShow(!textShow);
+            return textShowComment;
         }
     };
     return (
@@ -64,6 +67,11 @@ export const NewsStoryPage: FC = () => {
                 </DateTime>
                 <Div>
                     <Button onClick={handeClick}>Обновить комментарии</Button>
+                    {textShow && (
+                        <p className={styles.commentsText__p_dropdown}>
+                            {textShowComment}
+                        </p>
+                    )}
                 </Div>
                 <Div>{kids && <Comments comments={kids} />}</Div>
                 <Button onClick={() => routeNavigator.push('/')}>

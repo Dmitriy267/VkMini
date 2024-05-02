@@ -31,6 +31,12 @@ export default defineConfig({
             targets: ['defaults', 'not IE 11'],
         }),
     ],
+    test: {
+        globals: true,
+        environment: 'jsdom',
+        setupFiles: '.src/setupTest.ts',
+        css: false,
+    },
 
     build: {
         outDir: 'build',
